@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
             cell("Name", "Bob")
             cell("Age", 30)
         }
+
     }.render()
 }
 

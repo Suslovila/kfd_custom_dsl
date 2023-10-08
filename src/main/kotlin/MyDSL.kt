@@ -10,7 +10,7 @@ object table {
     }
 
 }
-
+@CustomDslMarker
 class TableHandler {
 
     val mainColumns = mutableListOf<Column<Any>>()
@@ -20,7 +20,6 @@ class TableHandler {
         if(mainColumns.any {it.name == name}) throw Exception("Column with name $name already exists!")
         mainColumns += Column(name, name.length, cl.javaObjectType)
     }
-
     fun row(init: Row.() -> Unit) {
         rows.add(Row(this).also(init))
     }
@@ -46,7 +45,7 @@ class TableHandler {
     }
 }
 class Column <T : Any> (val name : String, var length : Int, val type : Class <out T>)
-
+@CustomDslMarker
 class Row(val table : TableHandler) {
 
     val values = MutableList<Any>(table.mainColumns.size){}
@@ -58,3 +57,6 @@ class Row(val table : TableHandler) {
         connectedColumn.length = max(value.toString().length, connectedColumn.length)
     }
 }
+
+@DslMarker
+annotation class CustomDslMarker
